@@ -41,7 +41,7 @@ const AddProduct = () => {
     <div>
       <Header />
       <div className="p-3">
-        <h2>ADD PRODUCT HERE:</h2>
+     
         <label>Product Name</label>
         <input className="form-control" type="text" value={pname}  onChange={(e)=>{setpname(e.target.value)}}/>
         <label>Product Description</label>
@@ -54,6 +54,9 @@ const AddProduct = () => {
           <option>Bikes</option>
           <option>mobiles</option>
           <option>Laptop</option>
+          <option>Furniture</option>
+          <option>Elctronic Gadgets</option>
+          <option>Books</option>
         </select>
         <label>Product Image</label>
         <input className="form-control" type="file"  onChange={(e)=>{setpimage(e.target.files[0])}} />

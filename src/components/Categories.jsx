@@ -1,7 +1,7 @@
 import React from "react";
 import "./Header.css";
 import categories from "./CategoriesList";
-
+import { Link } from "react-router-dom";
 const Categories = (props) => {
   return (
     <div className=" cat-container">
@@ -23,6 +23,7 @@ const Categories = (props) => {
             );
           })}
       </div>
+
     </div>
   );
 };

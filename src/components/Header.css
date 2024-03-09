@@ -3,8 +3,11 @@
 
 .header-container{
 
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
     padding:10px 20px;
+     background-color:#002f3400 ;
+      border-bottom: 3x solid #fff;
+      box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
 }
 .mt-3{
     display: inline-block;
@@ -14,20 +17,21 @@
      margin-left:50px;
       outline: none;
        padding-left:10px;
-        width:200px;
-        height: 35px;
+        width:400px;
+        height: 44px;
         border: 2px solid #002f34;
          border-radius:4px 0px 0px 4px;
 
          
 }
 .search-btn{
-    height: 35px;
+    height: 44px;
     background-color:#002f34 ;
      color:#fff;
   border-radius:0px 4px 4px 0px;
    outline: none;
     border: none;
+     padding:0px 15px;
 }
 .logout-btn{
     height: 35px;
@@ -37,6 +41,7 @@
    outline: none;
     border: none; 
     padding:1px 15px;
+    margin-right: 10px;
 }
 .category{
     color:rgba(0,47,52,1);
@@ -44,7 +49,8 @@
      font-size: 18px;
 }
 .cat-container{
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    padding:1px 20px;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+    padding:8px 20px;
      cursor:pointer;
+
 }

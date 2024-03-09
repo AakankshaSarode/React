@@ -6,13 +6,13 @@ import AddProduct from "./AddProduct";
 import Categories from "./Categories";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FaHeart } from "react-icons/fa";
-import "./Home.css";
-const Home = () => {
+ import "./Home.css";
+const LikedProducts = () => {
   const navigate = useNavigate();
   const [products, setproducts] = useState([]);
   const [cproducts, setcproducts] = useState([]);
   const [search, setsearch] = useState("");
-
+  
   {
     /*  useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -21,15 +21,18 @@ const Home = () => {
   }, []);*/
   }
   useEffect(() => {
-    const url = "http://localhost:4000/get-products";
+    const url = "http://localhost:4000/liked-products";
+    let data={userId: localStorage.getItem('userId')}
     axios
-      .get(url)
+      .post(url,data)
       .then((res) => {
+ 
         if (res.data.products) {
           setproducts(res.data.products);
         }
       })
       .catch((err) => {
+
         alert("server err");
       });
   }, []);
@@ -37,8 +40,10 @@ const Home = () => {
     setsearch(value);
   };
   const handleClick = () => {
+  
     let filteredProducts = products.filter((item) => {
-      console.log(item);
+    console.log(item);
+    
 
       if (
         item.pname.toLowerCase().includes(search.toLowerCase()) ||
@@ -50,34 +55,32 @@ const Home = () => {
     });
     setproducts(filteredProducts);
   };
-  const handleCategory = (value) => {
-    let filteredProducts = products.filter((item, index) => {
-      if (item.category == value) {
-        return item;
-      }
-    });
-    setcproducts(filteredProducts);
-  };
+   const handleCategory=(value)=>{
 
-  const handleLike = (productId) => {
-    let userId = localStorage.getItem("userId");
+ let filteredProducts= products.filter((item,index)=>{
+  if(item.category==value){
+    return item;
+  }
+ })
+  setcproducts(filteredProducts);
+   }
 
-    const url = "http://localhost:4000/like-product";
-    const data = { userId, productId };
-    axios
-      .post(url, data)
+
+    const handleLike=(productId)=>{
+       let userId=localStorage.getItem('userId');
+
+      const url="http://localhost:4000/like-product";
+       const data={userId,productId}
+      axios.post(url,data)
       .then((res) => {
-        if (res.data.message) {
-          alert("Liked. ");
-        }
+if(res.data.message){
+  alert('Liked. ');
+}
       })
       .catch((err) => {
         alert("server err.");
       });
-  };
-   const handleProduct=(id)=>{
-     navigate('/product/'+id)
-   }
+    }
   return (
     <div>
       <Header
@@ -85,20 +88,20 @@ const Home = () => {
         handleSearch={handlesearch}
         handleClick={handleClick}
       />
-      <Categories handleCategory={handleCategory} />
-
-      <h5>SEARCH RESULTS</h5>
-      <div className="d-flex justify-content-center flex-wrap">
+      <Categories handleCategory={handleCategory}/>
+     
+   
+   <h5>SEARCH RESULTS</h5>
+   <div className="d-flex justify-content-center flex-wrap">
         {cproducts &&
           products.length > 0 &&
           cproducts.map((item, index) => {
             return (
-              <div key={item._id} className="card m-3">
-                <div onClick={() => handleLike(item._id)} className="icon-con">
-                  {" "}
-                  <FaHeart className="icons" />
-                  {/* <FaHeart />*/}
-                </div>
+         
+              <div key={item._id}className="card m-3">
+                           <div onClick={()=>handleLike(item._id)}className="icon-con">   <FaHeart className="icons" />
+                        {/* <FaHeart />*/}
+                         </div>
                 <img
                   width="300px"
                   height="200px"
@@ -119,28 +122,29 @@ const Home = () => {
           products.length > 0 &&
           products.map((item, index) => {
             return (
-              <div onClick={()=>handleProduct(item._id)} key={item._id} className="card m-3">
-                <div onClick={() => handleLike(item._id)} className="icon-con">
-                  {" "}
-                  <FaHeart className="icons" />
-                  {/* <FaHeart />*/}
-                </div>
+              <div key={item._id}className="card m-3">
+            <div onClick={()=>handleLike(item._id)} className="icon-con">   <FaHeart  className="icons" />
+               {/* <FaHeart />*/}
+                </div> 
                 <img
-                  width="280px"
+                  width="300px"
                   height="200px"
                   src={"http://localhost:4000/" + item.pimage}
                 />
-                <h3 className="pl-2 price-text">Rs.{item.price }</h3>
                 <p className="pl-2">
                   {item.pname} | {item.category}
                 </p>
                 <p className="pl-2 text-success">{item.pdesc}</p>
+                <h3 className="pl-2 text-success">{item.price}</h3>
               </div>
             );
           })}
       </div>
+
+
+
     </div>
   );
 };
 
-export default Home;
+export default LikedProducts;

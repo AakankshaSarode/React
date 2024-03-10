@@ -2,6 +2,7 @@
 import './App.css';
 import AddProduct from './components/AddProduct';
 import Categories from './components/Categories';
+import CategoryPage from './components/CategoryPage';
 import Header from './components/Header';
 import Home from './components/Home';
 import LikedProducts from './components/LikedProducts';
@@ -20,6 +21,7 @@ function App() {
            <Categories />
      <LikedProducts />
      <ProductDetail/>
+     <CategoryPage/>
 
     </div>
   );

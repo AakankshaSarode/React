@@ -12,7 +12,7 @@ const Home = () => {
   const [products, setproducts] = useState([]);
   const [cproducts, setcproducts] = useState([]);
   const [search, setsearch] = useState("");
-
+const [issearch, setissearch] = useState(false);
   {
     /*  useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -37,7 +37,20 @@ const Home = () => {
     setsearch(value);
   };
   const handleClick = () => {
-    let filteredProducts = products.filter((item) => {
+    const url = "http://localhost:4000/search?search=" + search;
+
+    axios
+      .get(url)
+      .then((res) => {
+       
+        setcproducts(res.data.products);
+        setissearch(true);
+      })
+      .catch((err) => {
+        alert("server err.");
+      });
+    {
+      /*  let filteredProducts = products.filter((item) => {
       console.log(item);
 
       if (
@@ -47,8 +60,9 @@ const Home = () => {
       ) {
         return item;
       }
-    });
-    setproducts(filteredProducts);
+    });*/
+    }
+    //setproducts(filteredProducts);
   };
   const handleCategory = (value) => {
     let filteredProducts = products.filter((item, index) => {
@@ -75,9 +89,9 @@ const Home = () => {
         alert("server err.");
       });
   };
-   const handleProduct=(id)=>{
-     navigate('/product/'+id)
-   }
+  const handleProduct = (id) => {
+    navigate("/product/" + id);
+  };
   return (
     <div>
       <Header
@@ -87,8 +101,10 @@ const Home = () => {
       />
       <Categories handleCategory={handleCategory} />
 
-      <h5>SEARCH RESULTS</h5>
-      <div className="d-flex justify-content-center flex-wrap">
+    {  issearch && cproducts && <h5>SEARCH RESULTS <button className="clear-btn" onClick={()=>setissearch(false)}> CLEAR</button>
+    </h5>}
+       {  issearch && cproducts && cproducts.length==0 &&<h5>No  results found</h5>}
+    {issearch && <div className="d-flex justify-content-center flex-wrap">
         {cproducts &&
           products.length > 0 &&
           cproducts.map((item, index) => {
@@ -112,14 +128,18 @@ const Home = () => {
               </div>
             );
           })}
-      </div>
-      <h5>ALL RESULTS</h5>
-      <div className="d-flex justify-content-center flex-wrap">
+      </div>}
+    
+     {  !issearch && <div className="d-flex justify-content-center flex-wrap">
         {products &&
           products.length > 0 &&
           products.map((item, index) => {
             return (
-              <div onClick={()=>handleProduct(item._id)} key={item._id} className="card m-3">
+              <div
+                onClick={() => handleProduct(item._id)}
+                key={item._id}
+                className="card m-3"
+              >
                 <div onClick={() => handleLike(item._id)} className="icon-con">
                   {" "}
                   <FaHeart className="icons" />
@@ -130,7 +150,7 @@ const Home = () => {
                   height="200px"
                   src={"http://localhost:4000/" + item.pimage}
                 />
-                <h3 className="pl-2 price-text">Rs.{item.price }</h3>
+                <h3 className="pl-2 price-text">Rs.{item.price}</h3>
                 <p className="pl-2">
                   {item.pname} | {item.category}
                 </p>
@@ -138,7 +158,7 @@ const Home = () => {
               </div>
             );
           })}
-      </div>
+      </div>}
     </div>
   );
 };

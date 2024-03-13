@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import Header from './Header';
-import { Link,useNavigate } from 'react-router-dom';
- import axios  from 'axios';
+import React, { useState } from "react";
+import Header from "./Header";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
-const navigate=useNavigate();
+  const navigate = useNavigate();
   const [username, setusername] = useState(" ");
   const [password, setpassword] = useState(" ");
   const handleApi = () => {
@@ -18,13 +18,12 @@ const navigate=useNavigate();
         console.log(res.data);
         if (res.data.message) {
           alert(res.data.message);
-        
 
-           if(res.data.token){
-            localStorage.setItem('token',res.data.token)
-            localStorage.setItem('userId',res.data.userId)
-            navigate('/');
-           }
+          if (res.data.token) {
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("userId", res.data.userId);
+            navigate("/");
+          }
         }
       })
       .catch((err) => {
@@ -35,24 +34,35 @@ const navigate=useNavigate();
   return (
     <div>
       <Header />
-       welcome to login...
-        <br />
-        USERNAME
-        <input type="text" value={username}
-         onChange={(e)=>{
+      welcome to login...
+      <br />
+      USERNAME
+      <input
+        type="text"
+        value={username}
+        onChange={(e) => {
           setusername(e.target.value);
-         }}/>
-        <br />
-    PASSWORD
-        <input type="text" value={password}
-         onChange={(e)=>{
-          setpassword(e.target.value)
-         }} />
-        <br />
-        <button onClick={handleApi}>LOGIN</button>
-        <Link to="/signup">SIGNUP</Link>
+        }}
+      />
+      <br />
+      PASSWORD
+      <input
+        type="text"
+        value={password}
+        onChange={(e) => {
+          setpassword(e.target.value);
+        }}
+      />
+      <br />
+      <button
+        className="font-2xl font-bold gap-4 text-black uppercase underline cursor cursor-pointer"
+        onClick={handleApi}
+      >
+        LOGIN
+      </button>
+      <Link to="/signup">SIGNUP</Link>
     </div>
   );
-}
+};
 
 export default Login;

@@ -16,7 +16,7 @@ const ProductDetail = () => {
     axios
       .get(url)
       .then((res) => {
-        console.log(res);
+     
         if (res.data.product) {
           setproduct(res.data.product);
         }

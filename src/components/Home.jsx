@@ -37,7 +37,7 @@ const [issearch, setissearch] = useState(false);
     setsearch(value);
   };
   const handleClick = () => {
-    const url = "http://localhost:4000/search?search=" + search;
+  /*  const url = "http://localhost:4000/search?search=" + search;
 
     axios
       .get(url)
@@ -48,9 +48,9 @@ const [issearch, setissearch] = useState(false);
       })
       .catch((err) => {
         alert("server err.");
-      });
+      });*/
     {
-      /*  let filteredProducts = products.filter((item) => {
+        let filteredProducts = products.filter((item) => {
       console.log(item);
 
       if (
@@ -60,9 +60,10 @@ const [issearch, setissearch] = useState(false);
       ) {
         return item;
       }
-    });*/
+    });
+        setproducts(filteredProducts);
     }
-    //setproducts(filteredProducts);
+
   };
   const handleCategory = (value) => {
     let filteredProducts = products.filter((item, index) => {
@@ -92,6 +93,7 @@ const [issearch, setissearch] = useState(false);
   const handleProduct = (id) => {
     navigate("/product/" + id);
   };
+  
   return (
     <div>
       <Header
@@ -129,7 +131,7 @@ const [issearch, setissearch] = useState(false);
             );
           })}
       </div>}
-    
+    <h5>ALL RESULTS</h5>
      {  !issearch && <div className="d-flex justify-content-center flex-wrap">
         {products &&
           products.length > 0 &&
@@ -146,7 +148,7 @@ const [issearch, setissearch] = useState(false);
                   {/* <FaHeart />*/}
                 </div>
                 <img
-                  width="280px"
+                  width="300px"
                   height="200px"
                   src={"http://localhost:4000/" + item.pimage}
                 />

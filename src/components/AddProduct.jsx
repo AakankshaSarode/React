@@ -33,7 +33,7 @@ const AddProduct = () => {
 
       })
       .catch((err)=>{
- console.log(err)
+ alert('server err');
 
       })
    }

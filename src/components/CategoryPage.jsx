@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AddProduct from "./AddProduct";
 import Categories from "./Categories";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FaHeart } from "react-icons/fa";
 import "./Home.css";
+ import { useParams } from "react-router-dom";
 const CategoryPage = () => {
-   
   const navigate = useNavigate();
-  const param =useParams()
-   console.log(param);
-
   const [products, setproducts] = useState([]);
   const [cproducts, setcproducts] = useState([]);
   const [search, setsearch] = useState("");
 const [issearch, setissearch] = useState(false);
+
   {
     /*  useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -24,8 +22,10 @@ const [issearch, setissearch] = useState(false);
     }
   }, []);*/
   }
+   const param= useParams();
+    console.log(param);
   useEffect(() => {
-    const url = "http://localhost:4000/get-products";
+    const url = "http://localhost:4000/get-products?catName="+param.catName;
     axios
       .get(url)
       .then((res) => {
@@ -36,12 +36,12 @@ const [issearch, setissearch] = useState(false);
       .catch((err) => {
         alert("server err");
       });
-  }, []);
+  }, [param]);
   const handlesearch = (value) => {
     setsearch(value);
   };
   const handleClick = () => {
-    const url = "http://localhost:4000/search?search=" + search;
+  const url = "http://localhost:4000/search?search=" + search;
 
     axios
       .get(url)
@@ -53,8 +53,8 @@ const [issearch, setissearch] = useState(false);
       .catch((err) => {
         alert("server err.");
       });
-    {
-      /*  let filteredProducts = products.filter((item) => {
+    {/*
+        let filteredProducts = products.filter((item) => {
       console.log(item);
 
       if (
@@ -64,9 +64,10 @@ const [issearch, setissearch] = useState(false);
       ) {
         return item;
       }
-    });*/
-    }
-    //setproducts(filteredProducts);
+    });
+        setproducts(filteredProducts);
+  */}
+
   };
   const handleCategory = (value) => {
     let filteredProducts = products.filter((item, index) => {
@@ -96,6 +97,7 @@ const [issearch, setissearch] = useState(false);
   const handleProduct = (id) => {
     navigate("/product/" + id);
   };
+
   return (
     <div>
       <Header
@@ -133,7 +135,7 @@ const [issearch, setissearch] = useState(false);
             );
           })}
       </div>}
-    
+   
      {  !issearch && <div className="d-flex justify-content-center flex-wrap">
         {products &&
           products.length > 0 &&
@@ -150,7 +152,7 @@ const [issearch, setissearch] = useState(false);
                   {/* <FaHeart />*/}
                 </div>
                 <img
-                  width="280px"
+                  width="300px"
                   height="200px"
                   src={"http://localhost:4000/" + item.pimage}
                 />
@@ -168,4 +170,3 @@ const [issearch, setissearch] = useState(false);
 };
 
 export default CategoryPage;
-

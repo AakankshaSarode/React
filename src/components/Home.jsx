@@ -37,7 +37,7 @@ const [issearch, setissearch] = useState(false);
     setsearch(value);
   };
   const handleClick = () => {
-  /*  const url = "http://localhost:4000/search?search=" + search;
+  const url = "http://localhost:4000/search?search=" + search;
 
     axios
       .get(url)
@@ -48,8 +48,8 @@ const [issearch, setissearch] = useState(false);
       })
       .catch((err) => {
         alert("server err.");
-      });*/
-    {
+      });
+    {/*
         let filteredProducts = products.filter((item) => {
       console.log(item);
 
@@ -62,7 +62,7 @@ const [issearch, setissearch] = useState(false);
       }
     });
         setproducts(filteredProducts);
-    }
+  */}
 
   };
   const handleCategory = (value) => {
@@ -93,7 +93,7 @@ const [issearch, setissearch] = useState(false);
   const handleProduct = (id) => {
     navigate("/product/" + id);
   };
-  
+
   return (
     <div>
       <Header
@@ -131,7 +131,7 @@ const [issearch, setissearch] = useState(false);
             );
           })}
       </div>}
-    <h5>ALL RESULTS</h5>
+   
      {  !issearch && <div className="d-flex justify-content-center flex-wrap">
         {products &&
           products.length > 0 &&

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Header.css";
 import categories from "./CategoriesList";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 const Categories = (props) => {
    const navigate= useNavigate();
  
@@ -21,6 +21,7 @@ const Categories = (props) => {
                 className="category"
               >
                 {item}
+             
               </span>
             );
           })}

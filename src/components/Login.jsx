@@ -17,7 +17,7 @@ const Login = () => {
       .then((res) => {
         console.log(res.data);
         if (res.data.message) {
-          alert(res.data.message);
+         // alert(res.data.message);
 
           if (res.data.token) {
             localStorage.setItem("token", res.data.token);
@@ -34,10 +34,11 @@ const Login = () => {
   return (
     <div>
       <Header />
-      welcome to login...
+       <div className="p-3 m-3"> 
+      <h3>welcome to login...</h3>
       <br />
       USERNAME
-      <input
+      <input className="form-control"
         type="text"
         value={username}
         onChange={(e) => {
@@ -46,7 +47,7 @@ const Login = () => {
       />
       <br />
       PASSWORD
-      <input
+      <input className=" form-control"
         type="text"
         value={password}
         onChange={(e) => {
@@ -55,12 +56,12 @@ const Login = () => {
       />
       <br />
       <button
-        className="font-2xl font-bold gap-4 text-black uppercase underline cursor cursor-pointer"
-        onClick={handleApi}
+  className="btn btn-primary m-3"        onClick={handleApi}
       >
         LOGIN
       </button>
-      <Link to="/signup">SIGNUP</Link>
+      <Link  className="m-3" to="/signup">SIGNUP</Link>
+    </div>
     </div>
   );
 };

@@ -1,53 +1,54 @@
+
 import React from "react";
 import "./Header.css";
-import { Link, useNavigate } from "react-router-dom";
-import {FaSearch} from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { FaSearch } from "react-icons/fa";
+
 const Header = (props) => {
-  const navigate = useNavigate();
+  const isLoggedIn = localStorage.getItem("token"); // Check if the user is logged in
+
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    window.location.href = "/login"; // Redirect to the login page after logout
   };
+
+  const handleSearch = (e) => {
+    props.handleSearch(e.target.value); // Call handleSearch function from props
+  };
+
   return (
-    <div className=" header-container d-flex  justify-content-between">
-      <div className="header">
+    <div className="nav-container d-flex justify-content-between">
+      <div className="nav">
         <Link className="links" to="/">
           CampusOLX
         </Link>
-        {/* search bar*/}
+        {/* Search bar */}
         <input
           className="search"
           type="text"
-          value={props && props.search}
-          onChange={(e) =>
-            props.handleSearch && props.handleSearch(e.target.value)
-          }
+          placeholder="mobile, laptop, devices, and more"
+          value={props.search || ""}
+          onChange={handleSearch} // Call handleSearch function on input change
         />
-        <button
-          className="search-btn"
-          onClick={() => props.handleClick && props.handleClick()}
-        >
-          <FaSearch/>
+        <button className="search-btn" onClick={props.handleClick}>
+          <FaSearch />
         </button>
-       {/* <span className="mt-3"> Sell & Purchase in your Campus...</span>*/}
       </div>
       <div>
-        {!!localStorage.getItem("token") && (
-          <Link  to="/add-product">
-           <button className="logout-btn "> ADD PRODUCT</button> 
-          </Link>
-        )}
-            {!!localStorage.getItem("token") && (
-          <Link  to="/liked-products">
-           <button className="logout-btn "> LIKED PRODUCT</button> 
-          </Link>
-        )}
-        {!localStorage.getItem("token") ? (
-          <Link to="/login">LOGIN</Link>
+        {isLoggedIn ? ( // Render the buttons only if the user is logged in
+          <>
+            <Link to="/add-product">
+              <button className="logout-btn">ADD PRODUCT</button>
+            </Link>
+            <Link to="/liked-products">
+              <button className="logout-btn">LIKED PRODUCT</button>
+            </Link>
+            <button className="logout-btn" onClick={handleLogout}>
+              LOGOUT
+            </button>
+          </>
         ) : (
-          <button className="logout-btn" onClick={handleLogout}>
-            LOGOUT
-          </button>
+          <Link className="login-btn" to="/login">LOGIN</Link>
         )}
       </div>
     </div>

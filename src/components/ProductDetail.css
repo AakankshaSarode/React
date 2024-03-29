@@ -1,0 +1,54 @@
+
+/* ProductDetail.css */
+
+.product-detail-container {
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+.product-images-container {
+  width: 50%;
+
+  
+  position: relative;
+}
+
+.product-images {
+  display: flex;
+  width: fit-content;
+}
+
+.product-images img {
+  flex-shrink: 0;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Show the second product image in full */
+.product-images img:nth-child(2) {
+  width: 100%; /* Set the width to 100% */
+  max-width: none; /* Remove the maximum width constraint */
+}
+.product-details {
+  text-align: center;
+   margin-top: 20%;
+    margin-left: 200px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: 
+  hsl(216, 98%, 52%);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  border-radius: 20px 20px 20px 20px;
+}
+
+.contact-details {
+  margin-top: 20px;
+}

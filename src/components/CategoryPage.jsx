@@ -1,170 +1,57 @@
+
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import AddProduct from "./AddProduct";
-import Categories from "./Categories";
-import { AiOutlineHeart } from "react-icons/ai";
 import { FaHeart } from "react-icons/fa";
 import "./Home.css";
- import { useParams } from "react-router-dom";
+
 const CategoryPage = () => {
   const navigate = useNavigate();
-  const [products, setproducts] = useState([]);
-  const [cproducts, setcproducts] = useState([]);
-  const [search, setsearch] = useState("");
-const [issearch, setissearch] = useState(false);
+  const { catName } = useParams();
+  const [products, setProducts] = useState([]);
 
-  {
-    /*  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/login");
-    }
-  }, []);*/
-  }
-   const param= useParams();
-    console.log(param);
   useEffect(() => {
-    const url = "http://localhost:4000/get-products?catName="+param.catName;
-    axios
-      .get(url)
-      .then((res) => {
-        if (res.data.products) {
-          setproducts(res.data.products);
-        }
-      })
-      .catch((err) => {
-        alert("server err");
-      });
-  }, [param]);
-  const handlesearch = (value) => {
-    setsearch(value);
-  };
-  const handleClick = () => {
-  const url = "http://localhost:4000/search?search=" + search;
-
-    axios
-      .get(url)
-      .then((res) => {
-       
-        setcproducts(res.data.products);
-        setissearch(true);
-      })
-      .catch((err) => {
-        alert("server err.");
-      });
-    {/*
-        let filteredProducts = products.filter((item) => {
-      console.log(item);
-
-      if (
-        item.pname.toLowerCase().includes(search.toLowerCase()) ||
-        item.pdesc.toLowerCase().includes(search.toLowerCase()) ||
-        item.category.toLowerCase().includes(search.toLowerCase())
-      ) {
-        return item;
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/get-products?catName=${catName}`);
+        setProducts(response.data.products);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        alert("Server error while fetching products.");
       }
-    });
-        setproducts(filteredProducts);
-  */}
+    };
 
-  };
-  const handleCategory = (value) => {
-    let filteredProducts = products.filter((item, index) => {
-      if (item.category == value) {
-        return item;
-      }
-    });
-    setcproducts(filteredProducts);
-  };
+    fetchProducts();
+  }, [catName]);
 
   const handleLike = (productId) => {
-    let userId = localStorage.getItem("userId");
-
-    const url = "http://localhost:4000/like-product";
-    const data = { userId, productId };
-    axios
-      .post(url, data)
-      .then((res) => {
-        if (res.data.message) {
-          alert("Liked. ");
-        }
-      })
-      .catch((err) => {
-        alert("server err.");
-      });
+    // Implement like functionality if needed
   };
+
   const handleProduct = (id) => {
     navigate("/product/" + id);
   };
 
   return (
     <div>
-      <Header
-        search={search}
-        handleSearch={handlesearch}
-        handleClick={handleClick}
-      />
-      <Categories handleCategory={handleCategory} />
-
-    {  issearch && cproducts && <h5>SEARCH RESULTS <button className="clear-btn" onClick={()=>setissearch(false)}> CLEAR</button>
-    </h5>}
-       {  issearch && cproducts && cproducts.length==0 &&<h5>No  results found</h5>}
-    {issearch && <div className="d-flex justify-content-center flex-wrap">
-        {cproducts &&
-          products.length > 0 &&
-          cproducts.map((item, index) => {
-            return (
-              <div key={item._id} className="card m-3">
-                <div onClick={() => handleLike(item._id)} className="icon-con">
-                  {" "}
-                  <FaHeart className="icons" />
-                  {/* <FaHeart />*/}
-                </div>
-                <img
-                  width="300px"
-                  height="200px"
-                  src={"http://localhost:4000/" + item.pimage}
-                />
-                <p className="pl-2">
-                  {item.pname} | {item.category}
-                </p>
-                <p className="pl-2 text-success">{item.pdesc}</p>
-                <h3 className="pl-2 text-success">{item.price}</h3>
-              </div>
-            );
-          })}
-      </div>}
-   
-     {  !issearch && <div className="d-flex justify-content-center flex-wrap">
-        {products &&
-          products.length > 0 &&
-          products.map((item, index) => {
-            return (
-              <div
-                onClick={() => handleProduct(item._id)}
-                key={item._id}
-                className="card m-3"
-              >
-                <div onClick={() => handleLike(item._id)} className="icon-con">
-                  {" "}
-                  <FaHeart className="icons" />
-                  {/* <FaHeart />*/}
-                </div>
-                <img
-                  width="300px"
-                  height="200px"
-                  src={"http://localhost:4000/" + item.pimage}
-                />
-                <h3 className="pl-2 price-text">Rs.{item.price}</h3>
-                <p className="pl-2">
-                  {item.pname} | {item.category}
-                </p>
-                <p className="pl-2 text-success">{item.pdesc}</p>
-              </div>
-            );
-          })}
-      </div>}
+      <Header />
+      <div className="d-flex justify-content-center flex-wrap">
+        {products.map((item) => (
+          <div key={item._id} className="pcard m-3" onClick={() => handleProduct(item._id)}>
+            <div onClick={() => handleLike(item._id)} className="icons-heart">
+              <FaHeart className="icons" />
+            </div>
+            <img src={`http://localhost:4000/${item.pimage}`} alt={item.pname} />
+            <div className="details">
+              <h3 className="price">Rs.{item.price}</h3>
+              <p className="name">{item.pname}</p>
+              <p className="category">{item.category}</p>
+              <p className="desc">{item.pdesc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

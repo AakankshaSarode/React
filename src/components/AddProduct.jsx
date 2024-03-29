@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import axios from "axios";
 import Categories from "./CategoriesList";
+import "./AddProduct.css"; // Import CSS file
+
 const AddProduct = () => {
   const navigate = useNavigate();
   const [pname, setpname] = useState("");
@@ -12,11 +14,13 @@ const AddProduct = () => {
   const [category, setcategory] = useState("");
   const [pimage, setpimage] = useState("");
   const [pimage2, setpimage2] = useState("");
+
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/login");
     }
   }, []);
+
   const handleApi = () => {
     const formData = new FormData();
     formData.append("pname", pname);
@@ -40,10 +44,11 @@ const AddProduct = () => {
         alert("server err");
       });
   };
+
   return (
     <div>
       <Header />
-      <div className="p-3">
+      <div className="add-product-container p-3">
         <h2>ADD PRODUCT HERE:</h2>
         <label>Product Name</label>
         <input
@@ -55,14 +60,17 @@ const AddProduct = () => {
           }}
         />
         <label>Product Description</label>
-        <input
-          className="form-control"
-          type="text"
+        <textarea
+          className="form-control product-description" // Apply product-description class
           value={pdesc}
           onChange={(e) => {
             setpdesc(e.target.value);
           }}
         />
+        <div className="d-flex justify-content-end">
+          {/* Read more button */}
+          <button className="read-more-btn">Read More</button>
+        </div>
         <label>Product Price</label>
         <input
           className="form-control"
@@ -80,6 +88,7 @@ const AddProduct = () => {
             setcategory(e.target.value);
           }}
         >
+          {/* Categories options */}
           <option>Bikes</option>
           <option>mobiles</option>
           <option>Laptop</option>

@@ -1,149 +1,120 @@
+
 import React, { useEffect, useState } from "react";
-import Header from "./Header";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import AddProduct from "./AddProduct";
-import Categories from "./Categories";
-import { AiOutlineHeart } from "react-icons/ai";
 import { FaHeart } from "react-icons/fa";
- import "./Home.css";
+import axios from "axios";
+import "./Home.css";
+import Header from "./Header";
+
 const LikedProducts = () => {
-  const navigate = useNavigate();
-  const [products, setproducts] = useState([]);
-  const [cproducts, setcproducts] = useState([]);
-  const [search, setsearch] = useState("");
-  
-  {
-    /*  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/login");
-    }
-  }, []);*/
-  }
+  const [products, setProducts] = useState([]);
+  const [cproducts, setCProducts] = useState([]);
+  const [search, setSearch] = useState(""); // Initialize search state with an empty string
+
   useEffect(() => {
+    if (localStorage.getItem('userId')) {
+      fetchLikedProducts();
+    }
+  }, []);
+
+  const fetchLikedProducts = () => {
     const url = "http://localhost:4000/liked-products";
-    let data={userId: localStorage.getItem('userId')}
-    axios
-      .post(url,data)
+    const data = { userId: localStorage.getItem('userId') };
+    axios.post(url, data)
       .then((res) => {
- 
         if (res.data.products) {
-          setproducts(res.data.products);
+          setProducts(res.data.products);
+          setCProducts(res.data.products);
         }
       })
       .catch((err) => {
-
-        alert("server err");
+        alert("Server error");
       });
-  }, []);
-  const handlesearch = (value) => {
-    setsearch(value);
   };
-  const handleClick = () => {
-  
-    let filteredProducts = products.filter((item) => {
-    console.log(item);
-    
 
-      if (
-        item.pname.toLowerCase().includes(search.toLowerCase()) ||
-        item.pdesc.toLowerCase().includes(search.toLowerCase()) ||
-        item.category.toLowerCase().includes(search.toLowerCase())
-      ) {
-        return item;
-      }
-    });
-    setproducts(filteredProducts);
-  };
-   const handleCategory=(value)=>{
+  const handleLike = (productId) => {
+    if (!localStorage.getItem('userId')) {
+      alert("Please login to like products.");
+      return;
+    }
 
- let filteredProducts= products.filter((item,index)=>{
-  if(item.category==value){
-    return item;
-  }
- })
-  setcproducts(filteredProducts);
-   }
-
-
-    const handleLike=(productId)=>{
-       let userId=localStorage.getItem('userId');
-
-      const url="http://localhost:4000/like-product";
-       const data={userId,productId}
-      axios.post(url,data)
+    const userId = localStorage.getItem('userId');
+    const url = "http://localhost:4000/like-product";
+    const data = { userId, productId };
+    axios.post(url, data)
       .then((res) => {
-if(res.data.message){
-  alert('Liked. ');
-}
+        if (res.data.message) {
+          alert('Liked.');
+          reloadLikedProducts();
+        }
       })
       .catch((err) => {
-        alert("server err.");
+        alert("Server error.");
       });
-    }
+  };
+
+  const reloadLikedProducts = () => {
+    fetchLikedProducts();
+  };
+
+  const getUnlikedProducts = () => {
+    return products.filter((product) => !cproducts.find((p) => p._id === product._id));
+  };
+
+  const handleSearch = (event) => {
+    setSearch(event.target.value);
+    const filteredProducts = products.filter(product =>
+      product.pname.toLowerCase().includes(event.target.value.toLowerCase())
+    );
+    setCProducts(filteredProducts);
+  };
+
   return (
-    <div>
-      <Header
-        search={search}
-        handleSearch={handlesearch}
-        handleClick={handleClick}
-      />
-      <Categories handleCategory={handleCategory}/>
-     
-   
-   <h5>SEARCH RESULTS</h5>
-   <div className="d-flex justify-content-center flex-wrap">
-        {cproducts &&
-          products.length > 0 &&
-          cproducts.map((item, index) => {
-            return (
-         
-              <div key={item._id}className="card m-3">
-                           <div onClick={()=>handleLike(item._id)}className="icon-con">   <FaHeart className="icons" />
-                        {/* <FaHeart />*/}
-                         </div>
-                <img
-                  width="300px"
-                  height="200px"
-                  src={"http://localhost:4000/" + item.pimage}
-                />
-                <p className="pl-2">
-                  {item.pname} | {item.category}
-                </p>
-                <p className="pl-2 text-success">{item.pdesc}</p>
-                <h3 className="pl-2 text-success">{item.price}</h3>
+    <>
+      <Header onSearch={handleSearch} searchValue={search} />
+      <div>
+        <h5>SEARCH RESULTS</h5>
+        <div className="d-flex justify-content-center flex-wrap">
+          {cproducts.map((item) => (
+            <div key={item._id} className="pcard m-3">
+              <div onClick={() => handleLike(item._id)} className="icons-heart">
+                <FaHeart className="icons" />
               </div>
-            );
-          })}
-      </div>
-      <h5>ALL RESULTS</h5>
-      <div className="d-flex justify-content-center flex-wrap">
-        {products &&
-          products.length > 0 &&
-          products.map((item, index) => {
-            return (
-              <div key={item._id}className="card m-3">
-            <div onClick={()=>handleLike(item._id)} className="icon-con">   <FaHeart  className="icons" />
-               {/* <FaHeart />*/}
-                </div> 
-                <img
-                  width="300px"
-                  height="200px"
-                  src={"http://localhost:4000/" + item.pimage}
-                />
-                <p className="pl-2">
-                  {item.pname} | {item.category}
-                </p>
-                <p className="pl-2 text-success">{item.pdesc}</p>
-                <h3 className="pl-2 text-success">{item.price}</h3>
+              <img
+                width="300px"
+                height="200px"
+                src={"http://localhost:4000/" + item.pimage}
+              />
+              <p className="pl-2">
+                {item.pname} | {item.category}
+              </p>
+              <p className="pl-2 text-success">{item.pdesc}</p>
+              <h3 className="pl-2 text-success">{item.price}</h3>
+            </div>
+          ))}
+        </div>
+
+        <h5>ALL RESULTS</h5>
+        <div className="d-flex justify-content-center flex-wrap">
+          {getUnlikedProducts().map((item) => (
+            <div key={item._id} className="pcard m-3">
+              <div onClick={() => handleLike(item._id)} className="icons-heart">
+                <FaHeart className="icons" />
               </div>
-            );
-          })}
+              <img
+                width="300px"
+                height="200px"
+                src={"http://localhost:4000/" + item.pimage}
+              />
+              <p className="pl-2">
+                {item.pname} | {item.category}
+              </p>
+              <p className="pl-2 text-success">{item.pdesc}</p>
+              <h3 className="pl-2 text-success">{item.price}</h3>
+            </div>
+          ))}
+        </div>
       </div>
-
-
-
-    </div>
+    </>
   );
 };
 

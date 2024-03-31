@@ -1,8 +1,62 @@
+
+/* AddProduct.css */
+
+/* Style for product card */
+.pcard {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+
+  
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  width: 300px;
+  height: 420px;
+}
+
+.pcard:hover {
+  transform: translateY(-5px);
+}
+
+/* Style for product image */
+.pcard img {
+  width: 300px;
+  height: 250px;
+  border-radius: 5px;
+}
+
+/* Style for product name */
+.pcard .pname {
+  font-size: 19px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Style for product category */
+.pcard .pcategory {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+/* Style for product description */
+.pcard .pdesc {
+  font-size: 14px;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+/* Style for product price */
+.pcard .pprice {
+  font-size: 16px;
+  font-weight: bold;
+  color: #f00; /* Red color for price */
+}
 .icons{
   font-size: 32px;
   height:25px;
   width:25px;
-   color: #eee;
+   color: rgb(172, 165, 165);
    cursor: pointer;
 }
 .icons-heart{
@@ -11,72 +65,10 @@
   right: 0;
   padding: 7px;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: #ffffff;
    margin:7px;
    overflow-y: hidden;
 }
 .icons:hover{
   color: red;
-}
- .links{
-   text-decoration: none;
-    font-size:24px;
-     color:#002f34;
-      font-weight: bold;
- }
- .price-text{
-  color:#002f34; 
-  
- }
- .clear-btn{
-  height: 24px;
-  background-color:#002f34 ;
-   color:#fff;
-border-radius:4px;
- font-size: 12px;
- outline: none;
-  border: none;
-   padding:0px 15px;
-    margin-top: 10px;
-     margin-left: 10px;
-}
-
-.pcard{
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-  
-
-  
-  width: 300px;
-}
-.pcard img {
-  width: 300px;
-  height: 250px;
-  border-radius: 8px;
-}
-
-/* AddProduct.css */
-
-.add-to-cart-btn {
-
-  /* Adjust margin as needed */
-  background-color: #007bff; /* Blue background color */
-  color: white; /* White text color */
-  border: none; /* No border */
-  padding: 10px 20px; /* Padding */
-  font-size: 16px; /* Font size */
-  cursor: pointer; /* Cursor style */
-  border-radius: 5px; /* Rounded corners */
-  transition: background-color 0.3s;
-right: 0;
-}
-
-.add-to-cart-button:hover {
-  background-color: #0056b3; /* Darker blue color on hover */
-}
-
-.add-to-cart-icon {
-  margin-right: 5px; /* Margin to the right of the icon */
 }

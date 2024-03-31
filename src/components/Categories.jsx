@@ -8,7 +8,7 @@ const Categories = (props) => {
   return (
     <div className=" cat-container">
       <div>
-        <span className="pr-3">All Categories</span>
+        <span className="pr-3"><h5>All Categories</h5></span>
         {categories &&
           categories.length > 0 &&
           categories.map((item, index) => {

@@ -14,6 +14,7 @@ const AddProduct = () => {
   const [category, setcategory] = useState("");
   const [pimage, setpimage] = useState("");
   const [pimage2, setpimage2] = useState("");
+  const [isPortable, setIsPortable] = useState(""); // State for portable feature
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -29,6 +30,7 @@ const AddProduct = () => {
     formData.append("category", category);
     formData.append("pimage", pimage);
     formData.append("pimage2", pimage2);
+    formData.append("isPortable", isPortable); // Append isPortable to form data
     formData.append("userId", localStorage.getItem("userId"));
     const url = "http://localhost:4000/add-product";
     axios
@@ -61,15 +63,13 @@ const AddProduct = () => {
         />
         <label>Product Description</label>
         <textarea
-          className="form-control product-description" // Apply product-description class
+          className="form-control product-description"
           value={pdesc}
           onChange={(e) => {
             setpdesc(e.target.value);
           }}
         />
         <div className="d-flex justify-content-end">
-          {/* Read more button */}
-          <button className="read-more-btn">Read More</button>
         </div>
         <label>Product Price</label>
         <input
@@ -90,16 +90,16 @@ const AddProduct = () => {
         >
           {/* Categories options */}
           <option>Bikes</option>
-          <option>mobiles</option>
+          <option>Mobiles</option>
           <option>Laptop</option>
           <option>Furniture</option>
-          <option>Elctronic Gadgets</option>
+          <option>Electronic Gadgets</option>
           <option>Books</option>
-          <option>other</option>
+          <option>Other</option>
           {Categories &&
             Categories.length > 0 &&
             Categories.map((item, index) => {
-              return <option key={"opiton" + index}>{item}</option>;
+              return <option key={"option" + index}>{item}</option>;
             })}
         </select>
         <label>Product Image</label>
@@ -110,7 +110,6 @@ const AddProduct = () => {
             setpimage(e.target.files[0]);
           }}
         />
-       
         <label>Product Second Image</label>
         <input
           className="form-control"
@@ -119,7 +118,19 @@ const AddProduct = () => {
             setpimage2(e.target.files[0]);
           }}
         />
-
+        <div>
+          {/* Dropdown for selecting portable or non-portable */}
+          <label>Is Portable:</label>
+          <select
+            className="form-control"
+            value={isPortable}
+            onChange={(e) => setIsPortable(e.target.value)}
+          >
+            <option value="">Select</option>
+            <option value="Portable">Portable</option>
+            <option value="Non-portable">Non-portable</option>
+          </select>
+        </div>
         <button onClick={handleApi} className="btn btn-primary mt-3">
           SUBMIT
         </button>

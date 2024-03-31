@@ -9,10 +9,11 @@ const Login = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // State to hold error message
 
   const handleApi = () => {
     if (!username || !password) {
-      alert("Please fill in all the fields.");
+      setErrorMessage("Please fill in all the fields.");
       return;
     }
 
@@ -28,12 +29,12 @@ const Login = () => {
           localStorage.setItem("userId", res.data.userId);
           navigate("/", { replace: true }); // Redirect to home page
         } else {
-          alert("Invalid credentials");
+          setErrorMessage("Invalid credentials"); // Set error message for invalid credentials
         }
       })
       .catch((err) => {
         console.error("Login error:", err);
-        alert("SERVER ERROR");
+        setErrorMessage("Server error"); // Set error message for server errors
       });
   };
 
@@ -65,6 +66,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          {errorMessage && <div className="error">{errorMessage}</div>} {/* Display error message */}
         </div>
         <div className="submit-container">
           <button className="submit" onClick={handleApi}>

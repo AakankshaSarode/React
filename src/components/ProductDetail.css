@@ -42,8 +42,13 @@
    margin-top: 20%;
     margin-left: 200px;
 }
+.product-details  .headline{
+ 
+   font-weight: bold;
+   color: rgb(13, 35, 173);
+}
 
-button {
+.button {
   padding: 10px 20px;
   background-color: 
   hsl(216, 98%, 52%);
@@ -57,4 +62,30 @@ button {
 
 .contact-details {
   margin-top: 20px;
+}
+.product-details .pname {
+  font-size: 19px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Style for product category */
+.product-details .pcategory {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+/* Style for product description */
+.product-details .pdesc {
+  font-size: 14px;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+/* Style for product price */
+.product-details .pprice {
+  font-size: 16px;
+  font-weight: bold;
+  color: #f00; /* Red color for price */
 }

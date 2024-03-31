@@ -79,7 +79,17 @@
         margin: auto;
         margin-top: 0.5%;
  }
+ .drop{
+    height: 50px;
+     width: 100px;
+     margin-left: 10px;
+ }
  
  
- 
+ .span-head{
+     font-size: 25px;
+      color:#002f34 ;
+       font-weight:bold;
+       text-underline-offset: none;
+ }
  

@@ -75,13 +75,14 @@ const ProductDetail = () => {
             </div>
             <div className="product-details-container">
               <div className="product-details">
-                <h3>Product Details:</h3>
-                <h4 className="price-text">Rs.{product.price}/-</h4>
-                <p>
+                <h3 className="headline">Product Details:</h3>
+
+                <p className="m-2 pname">
                   {product.pname} | {product.category}
                 </p>
-                <p className="text-success">{product.pdesc}</p>
-                <button onClick={() => handleContact(product.addedBy)}>
+                <h4 className="m-2 pprice">Rs.{product.price}/-</h4>
+                <p className="m-2 pdesc">{product.pdesc}</p>
+                <button  className="button" onClick={() => handleContact(product.addedBy)}>
                   {showContactDetails ? "HIDE CONTACT DETAILS" : "SHOW CONTACT DETAILS"}
                 </button>
                 {/* Show contact details section if showContactDetails is true */}
@@ -91,7 +92,7 @@ const ProductDetail = () => {
                     {user && user.mobile && <h3>{user.mobile}</h3>}
                     {user && user.email && <h6>{user.email}</h6>}
                     {user && user.department && <h4>{user.department}</h4>}
-                    {user && user.college && <h3>{user.college}</h3>}
+                    {user && user.college && <h4>{user.college}</h4>}
                     {user && user.year && <h6>{user.year}</h6>}
                   </div>
                 )}

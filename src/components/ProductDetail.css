@@ -23,14 +23,19 @@
 
 .product-images img {
   flex-shrink: 0;
-  max-width: 100%;
-  height: auto;
+  max-width: 300px;
+  height: 200px;
+  margin-top: 30%;
+  align-items: center;
+
+  
 }
 
 /* Show the second product image in full */
 .product-images img:nth-child(2) {
-  width: 100%; /* Set the width to 100% */
-  max-width: none; /* Remove the maximum width constraint */
+  width: 300px; /* Set the width to 100% */
+  max-width: none;
+   margin-left: 20px; /* Remove the maximum width constraint */
 }
 .product-details {
   text-align: center;
@@ -43,7 +48,8 @@ button {
   background-color: 
   hsl(216, 98%, 52%);
   color: #fff;
-  border: none;
+
+  
   cursor: pointer;
   margin-top: 20px;
   border-radius: 20px 20px 20px 20px;

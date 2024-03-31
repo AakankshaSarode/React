@@ -59,7 +59,9 @@ function Header(props) {
                         height: '40px',
                         color: '#fff',
                         fontSize: '14px',
-                        borderRadius: '50%'
+                        borderRadius: '50%',
+                    
+                        marginRight: '35px',
                     }} > <FaUser /> </div>
 
                 {showOver && <div style={{

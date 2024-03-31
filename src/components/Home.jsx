@@ -39,8 +39,12 @@ const Home = () => {
     axios
       .get(url)
       .then((res) => {
-        setCProducts(res.data.products);
-        setIsSearch(true);
+        if (res.data.products) {
+          setCProducts(res.data.products);
+          setIsSearch(true); // Set isSearch to true when search is performed
+        } else {
+          setIsSearch(false); // Set isSearch to false if no products are found
+        }
       })
       .catch((err) => {
         alert("server err.");
@@ -52,6 +56,7 @@ const Home = () => {
       return item.category === value;
     });
     setCProducts(filteredProducts);
+    setIsSearch(true); // Set isSearch to true when category is selected
   };
 
   const handleLike = (productId) => {
@@ -88,7 +93,7 @@ const Home = () => {
       />
       <Categories handleCategory={handleCategory} />
 
-      {isSearch && (
+      {isSearch && cProducts.length > 0 && (
         <div className="d-flex justify-content-center flex-wrap">
           {cProducts.map((item) => (
             <div key={item._id} className="pcard m-3">
@@ -105,8 +110,6 @@ const Home = () => {
               </p>
               <p className="pl-2 text-success">{item.pdesc}</p>
               <h3 className="pl-2 text-success">{item.price}</h3>
-         
-         
             </div>
           ))}
         </div>
@@ -120,21 +123,18 @@ const Home = () => {
               className="pcard m-3"
               onClick={() => handleProduct(item._id)}
             >
-              <div onClick={() => handleLike(item._id)} className="icons-heart">
-                <FaHeart className="icons" />
-              </div>
-              <img
-                width="300px"
-                height="200px"
-                src={"http://localhost:4000/" + item.pimage}
-              />
-              <h3 className="pl-2 price-text">Rs.{item.price}</h3>
-              <p className="pl-2">
-                {item.pname} | {item.category}
-              </p>
-              <p className="pl-2 text-success">{item.pdesc}</p>
-         
-         
+               <div onClick={() => handleLike(item._id)} className="icon-con">
+                  <FaHeart className="icons" />
+               </div>
+               <img
+                 width="300px"
+                 height="200px"
+                 src={"http://localhost:4000/" + item.pimage}
+               />
+               <p className="pl-2 pname">{item.pname}</p>
+               <p className="pl-2 pcategory">{item.category}</p>
+               <h3 className="pl-2 pprice">Rs.{item.price}</h3>
+               <p className="pl-2  pdesc">{item.pdesc}</p>
             </div>
           ))}
         </div>

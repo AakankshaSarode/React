@@ -90,6 +90,9 @@ const ProductDetail = () => {
                     {user && user.username && <h4>{user.username}</h4>}
                     {user && user.mobile && <h3>{user.mobile}</h3>}
                     {user && user.email && <h6>{user.email}</h6>}
+                    {user && user.department && <h4>{user.department}</h4>}
+                    {user && user.college && <h3>{user.college}</h3>}
+                    {user && user.year && <h6>{user.year}</h6>}
                   </div>
                 )}
               </div>

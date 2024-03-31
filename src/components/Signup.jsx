@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { FaUser, FaLock } from "react-icons/fa";
+import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { TbMailFilled } from "react-icons/tb";
 import { IoCall } from "react-icons/io5";
 import { Link } from "react-router-dom";
@@ -12,46 +12,48 @@ const Signup = ({ history }) => {
   const [password, setPassword] = useState("");
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
-  const [action, setAction] = useState("Sign Up");
+  const [department, setDepartment] = useState("");
+  const [year, setYear] = useState("");
+  const [otherYear, setOtherYear] = useState(""); // State for otherYear
+  const [college, setCollege] = useState("");
+  const [otherCollege, setOtherCollege] = useState(""); // State for otherCollege
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [action, setAction] = useState("Register");
+
+  
   const handleApi = () => {
-    if (!username.trim() || !password.trim() || !mobile.trim() || !email.trim()) {
-      alert("Please fill in all the fields.");
+    // Validate all fields
+    if (!username || !password || !mobile || !email || !department || !year || !college) {
+      alert("Please fill in all fields.");
       return;
     }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      alert("Please enter a valid email address.");
-      return;
-    }
-
-    const mobileRegex = /^\d{10}$/;
-    if (!mobileRegex.test(mobile)) {
-      alert("Please enter a valid 10-digit mobile number.");
-      return;
-    }
-
-    const url = "http://localhost:4000/signup";
-    const data = { username, password, mobile, email };
-
+  
+    // Include otherCollege and otherYear in the data payload
+    const data = {
+      username,
+      password,
+      mobile,
+      email,
+      department,
+      year: year === "Other" ? otherYear : year,
+      college: college === "Other" ? otherCollege : college,
+    };
+  
+    // Replace "your_api_endpoint" with the actual endpoint URL
+    const apiUrl = "http://localhost:4000/signup"; // Example URL
     axios
-      .post(url, data)
-      .then((res) => {
-        console.log("Signup Response:", res.data);
-        if (res.data.message) {
-          alert(res.data.message);
-        } else {
-          console.log("Redirecting to login page...");
-          history.push("/login");
-        }
+      .post(apiUrl, data) // Make a POST request to the signup endpoint
+      .then((response) => {
+        console.log(response); // Log the response from the backend
+        // Handle successful response, if needed
       })
-      .catch((err) => {
-        console.error("Signup Error:", err);
-        alert("SERVER ERROR");
+      .catch((error) => {
+        console.error(error); // Log any errors that occur during the request
+        // Handle errors, if needed
       });
   };
-
+  
   return (
     <div className="body">
       <div className="container card">
@@ -65,7 +67,7 @@ const Signup = ({ history }) => {
             <FaUser className="user" />
             <input
               type="text"
-              placeholder=" Enter you username"
+              placeholder=" Enter your username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -95,19 +97,85 @@ const Signup = ({ history }) => {
           <div className="input">
             <FaLock className="user" />
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder=" Enter your Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            {showPassword ? (
+              <FaEyeSlash className="eye" onClick={() => setShowPassword(false)} />
+            ) : (
+              <FaEye className="eye" onClick={() => setShowPassword(true)} />
+            )}
           </div>
+
+          {/* Dropdowns for department, year */}
+          <span className="label">DEPARTMENT</span>
+          <div className="input">
+            <input
+              type="text"
+              placeholder="Enter your Department"
+              value={department}
+              onChange={(e) => setDepartment(e.target.value)}
+            />
+          </div>
+          
+          <span className="label">COLLEGE</span>
+          <select value={college} onChange={(e) => setCollege(e.target.value)} className="select">
+            <option value="">Select College</option>
+            <option value="Engineering">  Dr.DY patil college of Engineering</option>
+            <option value="Engineering">  Dr.DY patil college of Research and Management</option>
+            <option value="Pharmacy"> Dr. DY Patil College of Pharmacy</option>
+            <option value="Architecture"> Dr.Patil College  of Architecture</option>
+            <option value="Art and Craft"> Dr.Patil College of Applied Art</option>
+            <option value="Architecture"> Dr.Patil College  of BBA</option>
+            <option value="Art and Craft"> Dr.Patil College of Agriculture</option>
+            <option value="Polytechnic"> S.B patil College polytechnic</option>
+            <option value="Junior College"> Dr. DY patil college of Junior College</option>
+            <option value="Other">Other</option>
+          </select>
+
+          {/* Input field for other college */}
+          {college === "Other" && (
+            <div className="input">
+              <input
+                type="text"
+                placeholder="Enter your college name"
+                value={otherCollege}
+                onChange={(e) => setOtherCollege(e.target.value)}
+              />
+            </div>
+          )}
+
+
+          <span className="label">YEAR</span>
+          <select value={year} onChange={(e) => setYear(e.target.value)} className="select" required>
+            <option value="">Select Year</option>
+            <option value="1st">1st Year</option>
+            <option value="2nd">2nd Year</option>
+            <option value="3rd">3rd Year</option>
+            <option value="4th">4th Year</option>
+            <option value="Other">Other</option>
+          </select>
+
+          {/* Input field for other year */}
+          {year === "Other" && (
+            <div className="input">
+              <input
+                type="text"
+                placeholder="Enter your year"
+                value={otherYear}
+                onChange={(e) => setOtherYear(e.target.value)}
+              />
+            </div>
+          )}
         </div>
         <div className="submit-container">
           <button
             className={action === "Login" ? "submit gray" : "submit"}
             onClick={handleApi}
           >
-            SignUp
+            Register
           </button>
           <Link className="submit" to="/login">
             LOGIN

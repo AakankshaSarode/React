@@ -89,13 +89,8 @@ const AddProduct = () => {
           }}
         >
           {/* Categories options */}
-          <option>Bikes</option>
-          <option>Mobiles</option>
-          <option>Laptop</option>
-          <option>Furniture</option>
-          <option>Electronic Gadgets</option>
-          <option>Books</option>
-          <option>Other</option>
+          
+          
           {Categories &&
             Categories.length > 0 &&
             Categories.map((item, index) => {

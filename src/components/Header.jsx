@@ -99,7 +99,7 @@ function Header(props) {
                     </div>
                     <div>
                         {!localStorage.getItem('token') ?
-                            <Link to="/login">  LOGIN </Link> :
+                            <Link  className="log" to="/login">  LOGIN </Link> :
                             <button className='logout-btn' onClick={handleLogout}> LOGOUT </button>}
                     </div>
 

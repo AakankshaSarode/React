@@ -123,15 +123,25 @@ const Signup = ({ history }) => {
           <span className="label">COLLEGE</span>
           <select value={college} onChange={(e) => setCollege(e.target.value)} className="select">
             <option value="">Select College</option>
-            <option value="Engineering">  Dr.DY patil college of Engineering</option>
-            <option value="Engineering">  Dr.DY patil college of Research and Management</option>
-            <option value="Pharmacy"> Dr. DY Patil College of Pharmacy</option>
-            <option value="Architecture"> Dr.Patil College  of Architecture</option>
-            <option value="Art and Craft"> Dr.Patil College of Applied Art</option>
-            <option value="Architecture"> Dr.Patil College  of BBA</option>
-            <option value="Art and Craft"> Dr.Patil College of Agriculture</option>
-            <option value="Polytechnic"> S.B patil College polytechnic</option>
-            <option value="Junior College"> Dr. DY patil college of Junior College</option>
+            <option value="Dr.DY patil college of Engineering
+            ">  Dr.DY patil college of Engineering</option>
+            <option value="
+              Dr.DY patil college of Research and Management">  Dr.DY patil college of Research and Management</option>
+            <option value="
+             Dr. DY Patil College of Pharmacy"> Dr. DY Patil College of Pharmacy</option>
+            <option value="
+            Dr. DY Patil College  of Architecture"> Dr. DY Patil College  of Architecture</option>
+            <option value="
+            Dr. DY Patil College of Applied Art"> Dr. DY Patil College of Applied Art</option>
+            <option value="
+            Dr. DY Patil College  of BBA"> Dr. DY Patil College  of BBA</option>
+            <option value="
+             Dr.DY Patil College of Agriculture"> Dr.DY Patil College of Agriculture</option>
+            <option value="
+            S.B patil College polytechnic"> S.B patil College polytechnic</option>
+            
+            <option value="
+             Dr. DY patil college of Junior College"> Dr. DY patil college of Junior College</option>
             <option value="Other">Other</option>
           </select>
 
@@ -171,12 +181,12 @@ const Signup = ({ history }) => {
           )}
         </div>
         <div className="submit-container">
-          <button
+          <but
             className={action === "Login" ? "submit gray" : "submit"}
             onClick={handleApi}
           >
             Register
-          </button>
+          </but>
           <Link className="submit" to="/login">
             LOGIN
           </Link>

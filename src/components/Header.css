@@ -93,4 +93,10 @@
      
        text-decoration: none;
  }
- 
+ .log{
+    background-color:rgba(0,47,52,1);
+    color: #fff;
+    height: 40px;
+    width: 30px;
+    text-decoration: none;
+ }

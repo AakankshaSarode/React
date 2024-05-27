@@ -8,7 +8,7 @@
   background: rgb(120, 120, 120) ;
   
   
-  min-height: 100vh;
+  height: 170vh;
   
   
   display: flex;
@@ -192,4 +192,13 @@
   
   color: #333; 
   
+}
+.success-message {
+  background-color: #dff0d8; /* Background color */
+  color: #2239e1; /* Text color */
+  border: 1px solid #d6e9c6; /* Border color */
+  padding: 10px; /* Padding */
+  border-radius: 5px; /* Border radius */
+  margin-top: 10px; /* Margin from the top */
+  text-align: center; /* Center align text */
 }

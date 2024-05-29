@@ -6,6 +6,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Header from "./Header";
 import "./ProductDetail.css"; // Import your CSS file
+import API_URL from "../constants";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState();
@@ -15,7 +16,7 @@ const ProductDetail = () => {
   const carouselRef = useRef(null);
 
   useEffect(() => {
-    const url = "http://localhost:4000/get-product/" + p.productId;
+    const url = API_URL+"/get-product/" + p.productId;
 
     axios
       .get(url)
@@ -30,7 +31,7 @@ const ProductDetail = () => {
   }, []);
 
   const handleContact = (addedBy) => {
-    const url = "http://localhost:4000/get-user/" + addedBy;
+    const url = API_URL+"/get-user/" + addedBy;
 
     axios
       .get(url)
@@ -62,12 +63,12 @@ const ProductDetail = () => {
             <div className="product-images-container" ref={carouselRef}>
               <div className="product-images">
                 <img
-                  src={"http://localhost:4000/" + product.pimage}
+                  src={API_URL+"/" + product.pimage}
                   alt="Product Image 1"
                 />
                 {product.pimage2 && (
                   <img
-                    src={"http://localhost:4000/" + product.pimage2}
+                    src={API_URL+"/" + product.pimage2}
                     alt="Product Image 2"
                   />
                 )}

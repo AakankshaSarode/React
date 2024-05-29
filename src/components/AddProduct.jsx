@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Categories from "./CategoriesList";
 import "./AddProduct.css"; // Import CSS file
+import API_URL from "../constants";
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const AddProduct = () => {
     formData.append("pimage2", pimage2);
     formData.append("isPortable", isPortable); // Append isPortable to form data
     formData.append("userId", localStorage.getItem("userId"));
-    const url = "http://localhost:4000/add-product";
+    const url =API_URL+"/add-product";
     axios
       .post(url, formData)
       .then((res) => {

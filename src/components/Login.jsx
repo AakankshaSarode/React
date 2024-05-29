@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaUser, FaLock } from "react-icons/fa";
 import "./login.css";
+import API_URL from "../constants";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const Login = () => {
       return;
     }
 
-    const url = "http://localhost:4000/login";
+    const url = API_URL+"/login";
     const data = { username, password };
 
     axios
